@@ -1,0 +1,30 @@
+### create a new brand
+POST http://localhost:1000/api/brands
+Content-Type: application/json
+
+{
+  "name": "brands 1"
+}
+
+### get all brandss
+GET http://localhost:1000/api/brands
+
+
+### get a brands by id
+GET http://localhost:1000/api/brands/6807a7dd80d6c466803737db
+
+
+
+### update a brands by id
+
+PATCH http://localhost:1000/api/brands/6807a7dd80d6c466803737db
+Content-Type: application/json
+
+{
+  "name": "Updated Brands 1"
+}
+
+
+### delete a brands by id
+DELETE http://localhost:1000/api/brands/6807a7dd80d6c466803737db
+

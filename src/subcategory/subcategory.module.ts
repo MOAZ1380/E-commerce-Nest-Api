@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SubcategoryService } from './subcategory.service';
 import { SubcategoryController } from './subcategory.controller';
@@ -8,7 +8,7 @@ import { Category, CategorySchema } from 'src/category/entities/category.entity'
 
 @Module({
   imports: [
-    CategoryModule,
+    forwardRef(() => CategoryModule),
     MongooseModule.forFeature([
       { name: SubCategory.name, schema: SubCategorySchema },
       { name: Category.name, schema: CategorySchema },
@@ -16,6 +16,6 @@ import { Category, CategorySchema } from 'src/category/entities/category.entity'
   ],
   controllers: [SubcategoryController],
   providers: [SubcategoryService],
-  exports: [SubcategoryService],
+  exports: [SubcategoryService, MongooseModule],
 })
 export class SubcategoryModule {}

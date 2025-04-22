@@ -1,14 +1,18 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Category } from './entities/category.entity';
 import { CategoryDocument } from './entities/category.entity';
+import { SubCategory, SubCategoryDocument } from 'src/subcategory/entities/subcategory.entity';
 
 @Injectable()
 export class CategoryService {
-  constructor(@InjectModel(Category.name) private categoryModel: Model<CategoryDocument>) {}
+  constructor(
+    @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
+    @InjectModel(SubCategory.name) private SubCategory: Model<SubCategoryDocument>
+  ) {}
 
   /**
    * Create a new category
@@ -21,7 +25,6 @@ export class CategoryService {
       throw new BadRequestException('Category name must be unique');
     }
 
-    createCategoryDto.slug = createCategoryDto.name.toLowerCase().replace(/\s/g, '-');
     const newCategory = new this.categoryModel(createCategoryDto);
     return newCategory.save();
   }
@@ -55,16 +58,16 @@ export class CategoryService {
    * @returns The updated category
    */
   async update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<Category> {
-
-    if (updateCategoryDto.name) {
-      updateCategoryDto.slug = updateCategoryDto.name.toLowerCase().replace(/\s/g, '-');
+    const exists = await this.categoryModel.findOne({ name: updateCategoryDto.name });
+    if (exists) {
+      throw new ConflictException('Category name must be unique');
     }
 
     const updatedCategory = await this.categoryModel.findByIdAndUpdate(id, updateCategoryDto, { new: true }).exec();
     if (!updatedCategory) {
       throw new BadRequestException('Category not found');
     }
-    return updatedCategory;
+    return updatedCategory.save();
   }
 
   /**
@@ -72,11 +75,19 @@ export class CategoryService {
    * @param id - The ID of the category to delete
    * @returns The deleted category
    */
-  async remove(id: string): Promise<Category> {
+  async remove(id: string): Promise<{ message: string; data: Category }> {
     const deletedCategory = await this.categoryModel.findByIdAndDelete(id).exec();
     if (!deletedCategory) {
       throw new BadRequestException('Category not found');
     }
-    return deletedCategory;
+
+    const subcategories = await this.SubCategory.deleteMany({ category: id }).exec();
+    if (subcategories.deletedCount > 0) {
+      console.log(`Deleted ${subcategories.deletedCount} subcategories associated with category ID ${id}`);
+    } else {
+      console.log(`No subcategories found for category ID ${id}`);
+    }
+
+    return {"message": "Category deleted successfully and subcategory", "data": Category };
   }
 }

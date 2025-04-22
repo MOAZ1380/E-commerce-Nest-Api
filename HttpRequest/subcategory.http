@@ -1,0 +1,26 @@
+### create a new subcategory
+POST http://localhost:1000/api/categories/68079b5677c08c836e886abe/subcategories
+Content-Type: application/json
+
+{
+  "name": "new_22111_subcategory"
+}
+
+### get all subcategories
+GET http://localhost:1000/api/categories/68079b5677c08c836e886abe/subcategories
+
+
+### get a subcategory by id
+GET http://localhost:1000/api/categories/68079b5677c08c836e886abe/subcategories/68079b7277c08c836e886ac2
+
+### update a subcategory by id
+PATCH http://localhost:1000/api/categories/6806389e2f09c51b84879ddf/subcategories/680787f7db4cfa27e6a5a70d
+Content-Type: application/json
+
+{
+  "name": "update subcategory"
+}
+
+
+### delete a subcategory by id
+DELETE http://localhost:1000/api/categories/68077c740850ac83e4b7287c/subcategories/680781506ee763577a1baa00

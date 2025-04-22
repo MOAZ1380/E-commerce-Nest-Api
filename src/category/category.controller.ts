@@ -4,7 +4,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ValidateObjectIdPipe } from 'src/utils/pipes/validate-object-id.pipe';
 
-@Controller('api/v1/category')
+@Controller('api/categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 

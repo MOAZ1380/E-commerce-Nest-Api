@@ -1,0 +1,24 @@
+# create a new category
+POST http://localhost:1000/api/categories
+Content-Type: application/json
+
+{
+  "name": "categories_22"
+}
+
+### get all categories
+GET http://localhost:1000/api/categories
+
+### get a categories by id
+GET http://localhost:1000/api/categories/6806389e2f09c51b84879ddf
+
+### update a categories by id
+PATCH http://localhost:1000/api/categories/68078a9c36dc18bc51c62b6b
+Content-Type: application/json
+
+{
+  "name": "Updated categories 3"
+}
+
+### delete a categories by id
+DELETE http://localhost:1000/api/categories/68079b5677c08c836e886abe

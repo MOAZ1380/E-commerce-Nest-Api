@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type CategoryDocument = HydratedDocument<Category>;
+export type BrandDocument = HydratedDocument<Brand>;
 
 @Schema({ timestamps: true })
-export class Category {
+export class Brand {
     @Prop({ 
         required: [true, 'Name is required'] ,
         unique: [true, 'Name must be unique'],
@@ -21,9 +21,9 @@ export class Category {
     image?: string;
 }
 
-export const CategorySchema = SchemaFactory.createForClass(Category);
+export const BrandSchema = SchemaFactory.createForClass(Brand);
 
-CategorySchema.pre('save', function (next) {
+BrandSchema.pre('save', function (next) {
     this.slug = this.name.toLowerCase().replace(/\s+/g, '-');
     next();
 });
