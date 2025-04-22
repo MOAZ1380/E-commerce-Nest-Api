@@ -20,7 +20,7 @@ export class CategoryService {
    * @returns The created category
    */
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
-    const exists = await this.categoryModel.findOne({ name: createCategoryDto.name });
+    const exists = await this.categoryModel.findOne({ name: new RegExp(`^${createCategoryDto.name}$`, 'i') });
     if (exists) {
       throw new BadRequestException('Category name must be unique');
     }
@@ -58,7 +58,7 @@ export class CategoryService {
    * @returns The updated category
    */
   async update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<Category> {
-    const exists = await this.categoryModel.findOne({ name: updateCategoryDto.name });
+    const exists = await this.categoryModel.findOne({ name: new RegExp(`^${updateCategoryDto.name}$`, 'i') });
     if (exists) {
       throw new ConflictException('Category name must be unique');
     }

@@ -28,9 +28,9 @@ export class SubcategoryService {
       throw new NotFoundException('Category not found');
     }
 
-    const existingSubcategory = await this.SubCategory.findOne({ name: createSubcategoryDto.name});
+    const existingSubcategory = await this.SubCategory.findOne({ name: new RegExp(`^${createSubcategoryDto.name}$`, 'i') });
     if (existingSubcategory) {
-      throw new NotFoundException('Subcategory already exists in this category');
+      throw new NotFoundException('Subcategory already exists');
     }
     
     createSubcategoryDto.slug  = createSubcategoryDto.name.toLowerCase().replace(/\s/g, '-');
@@ -93,9 +93,9 @@ export class SubcategoryService {
       throw new NotFoundException('Subcategory does not belong to this category');
     }
     if (updateSubcategoryDto.name) {
-      const existingSubcategory = await this.SubCategory.findOne({ name: updateSubcategoryDto.name, category: categoryId });
+      const existingSubcategory = await this.SubCategory.findOne({ name: new RegExp(`^${updateSubcategoryDto.name}$`, 'i') });
       if (existingSubcategory && existingSubcategory.id !== id) {
-        throw new ConflictException('Subcategory already exists in this category');
+        throw new ConflictException('Subcategory already exists');
       }
     }
 
