@@ -1,0 +1,31 @@
+### Create a new user
+POST http://localhost:1000/api/users
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "John12334ew@gmail.co",
+    "role": "admin",
+    "password": "12345678",
+    "phone": "1234567890"
+}
+
+### Get all users
+GET http://localhost:1000/api/users
+
+
+### Get a user by ID
+GET http://localhost:1000/api/users/6808d89d533b43d935e7057d
+
+
+### Update a user by ID
+PATCH http://localhost:1000/api/users/6808d89d533b43d935e7057d
+Content-Type: application/json
+
+{
+    "name": "John Doooo",
+    "email": "new@gmail.com"
+}
+
+### Delete a user by ID
+DELETE http://localhost:1000/api/users/6808d89d533b43d935e7057d

@@ -4,6 +4,7 @@ import { UpdateBrandDto } from './dto/update-brand.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Brand, BrandDocument } from './entities/brand.entity';
 import { Model } from 'mongoose';
+import * as fs from 'fs';
 
 @Injectable()
 export class BrandService {
@@ -66,8 +67,14 @@ export class BrandService {
     }
 
     const exists = await this.BrandModel.findOne({ name: updateBrandDto.name });
-    if (exists) {
+    if (exists && exists.id !== id) {
       throw new ConflictException('Brand name must be unique');
+    }
+
+    if (brand.image && fs.existsSync(brand.image)) {
+        await fs.promises.unlink(brand.image).catch(err => {
+            console.error('Error deleting file:', err);
+        });
     }
 
     const imagePath = file?.path;

@@ -4,36 +4,14 @@ import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { ValidateObjectIdPipe } from 'src/utils/pipes/validate-object-id.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
-import * as multer from 'multer';
+import { createMulterOptions } from '../utils/uploads/uploadSingleImage';
 
 @Controller('api/brands')
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
   @Post()
-  @UseInterceptors(
-      FileInterceptor('image', {
-      storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-          cb(null, './uploads/brands');
-        },
-        filename: (req, file, cb) => {
-          const uniqueSuffix = 'brands.' + Date.now() + '-' + Math.round(Math.random() * 1E9) + '.' + file.mimetype.split('/')[1];
-          cb(null, uniqueSuffix);
-        }
-      }),
-      fileFilter: (req: any, file: { mimetype: string; }, cb: (arg0: Error | null, arg1: boolean) => void) => {
-        if (!file.mimetype.match(/^image\/(jpg|jpeg|png|webp)$/)) {
-          cb(new Error('Only image files are allowed!'), false);
-        } else {
-          cb(null, true);
-        }
-      },
-      limits: {
-        fileSize: 1024 * 1024 * 5
-      }
-    }
-  ))
+  @UseInterceptors(FileInterceptor('image', createMulterOptions('brands')))
   create(
     @UploadedFile() file: Express.Multer.File,
     @Body(new ValidationPipe({
@@ -54,29 +32,7 @@ export class BrandController {
   }
 
   @Patch(':id')
-  @UseInterceptors(
-    FileInterceptor('image', {
-    storage: multer.diskStorage({
-      destination: (req, file, cb) => {
-        cb(null, './uploads/brands');
-      },
-      filename: (req, file, cb) => {
-        const uniqueSuffix = 'brands.' + Date.now() + '-' + Math.round(Math.random() * 1E9) + '.' + file.mimetype.split('/')[1];
-        cb(null, uniqueSuffix);
-      }
-    }),
-    fileFilter: (req: any, file: { mimetype: string; }, cb: (arg0: Error | null, arg1: boolean) => void) => {
-      if (!file.mimetype.match(/^image\/(jpg|jpeg|png|webp)$/)) {
-        cb(new Error('Only image files are allowed!'), false);
-      } else {
-        cb(null, true);
-      }
-    },
-    limits: {
-      fileSize: 1024 * 1024 * 5
-      }
-    }
-  ))
+  @UseInterceptors(FileInterceptor('image', createMulterOptions('brands')))
   update(
     @UploadedFile() file: Express.Multer.File,
     @Param('id', ValidateObjectIdPipe) id: string,

@@ -6,6 +6,8 @@ import { Model } from 'mongoose';
 import { Category } from './entities/category.entity';
 import { CategoryDocument } from './entities/category.entity';
 import { SubCategory, SubCategoryDocument } from 'src/subcategory/entities/subcategory.entity';
+import * as fs from 'fs';
+
 
 @Injectable()
 export class CategoryService {
@@ -63,9 +65,21 @@ export class CategoryService {
    * @returns The updated category
    */
   async update(id: string, updateCategoryDto: UpdateCategoryDto, file: Express.Multer.File): Promise<Category> {
-    const exists = await this.categoryModel.findOne({ name: new RegExp(`^${updateCategoryDto.name}$`, 'i') });
-    if (exists) {
+
+    const category = await this.categoryModel.findById(id).exec();
+    if (!category) {
+      throw new BadRequestException('Category not found');
+    }
+    
+    const exists = await this.categoryModel.findOne({ name: updateCategoryDto.name });
+    if (exists && exists._id.toString() !== id) {
       throw new ConflictException('Category name must be unique');
+    }
+
+    if (category.image && fs.existsSync(category.image)) {
+      await fs.promises.unlink(category.image).catch(err => {
+        console.error('Error deleting file:', err);
+      });
     }
 
     const imagePath = file?.path;
@@ -101,6 +115,6 @@ export class CategoryService {
       console.log(`No subcategories found for category ID ${id}`);
     }
 
-    return {"message": "Category deleted successfully and subcategory", "data": Category };
+    return { message: 'Category deleted successfully and subcategories', data: deletedCategory };
   }
 }

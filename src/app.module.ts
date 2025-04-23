@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CategoryModule } from './category/category.module';
 import { SubcategoryModule } from './subcategory/subcategory.module';
 import { BrandModule } from './brand/brand.module';
+import { UserModule } from './user/user.module';
 
 
 
@@ -11,6 +12,8 @@ import { BrandModule } from './brand/brand.module';
   imports: [
     CategoryModule,
     SubcategoryModule,
+    BrandModule,
+    UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -20,7 +23,6 @@ import { BrandModule } from './brand/brand.module';
         uri: configService.get<string>('MONGO_URI')!,
       }),
     }),
-    BrandModule,
   ],
   controllers: [],
   providers: [],
