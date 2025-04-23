@@ -19,13 +19,18 @@ export class CategoryService {
    * @param createCategoryDto - The data transfer object containing category details
    * @returns The created category
    */
-  async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
+  async create(createCategoryDto: CreateCategoryDto, file: Express.Multer.File): Promise<Category> {
     const exists = await this.categoryModel.findOne({ name: new RegExp(`^${createCategoryDto.name}$`, 'i') });
     if (exists) {
       throw new BadRequestException('Category name must be unique');
     }
-
-    const newCategory = new this.categoryModel(createCategoryDto);
+    const imagePath = file?.path;
+    
+    const newCategory = new this.categoryModel({
+      ...createCategoryDto,
+      image : imagePath
+    });
+    
     return newCategory.save();
   }
 
@@ -57,13 +62,21 @@ export class CategoryService {
    * @param updateCategoryDto - The data transfer object containing updated category details 
    * @returns The updated category
    */
-  async update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<Category> {
+  async update(id: string, updateCategoryDto: UpdateCategoryDto, file: Express.Multer.File): Promise<Category> {
     const exists = await this.categoryModel.findOne({ name: new RegExp(`^${updateCategoryDto.name}$`, 'i') });
     if (exists) {
       throw new ConflictException('Category name must be unique');
     }
 
-    const updatedCategory = await this.categoryModel.findByIdAndUpdate(id, updateCategoryDto, { new: true }).exec();
+    const imagePath = file?.path;
+
+    const updatedCategory = await this.categoryModel.findByIdAndUpdate(id,
+       { 
+        ...updateCategoryDto,
+        image : imagePath
+       },
+      { new: true }).exec();
+      
     if (!updatedCategory) {
       throw new BadRequestException('Category not found');
     }

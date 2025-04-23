@@ -1,10 +1,9 @@
-# create a new category
+### Create Category with image
 POST http://localhost:1000/api/categories
-Content-Type: application/json
+Content-Type: multipart/form-data
 
-{
-  "name": "categories_22"
-}
+name=T-Shirts
+image=@C:/Users/Moaz Sayed/Pictures/Screenshots/Screenshot.png
 
 ### get all categories
 GET http://localhost:1000/api/categories

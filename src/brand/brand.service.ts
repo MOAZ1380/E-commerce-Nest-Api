@@ -14,13 +14,19 @@ export class BrandService {
    * @param createBrandDto - The data transfer object containing brand details
    * @returns The created brand
   */
-  async create(createBrandDto: CreateBrandDto): Promise<Brand> {
+  async create(createBrandDto: CreateBrandDto, file: Express.Multer.File): Promise<Brand> {
     const exists = await this.BrandModel.findOne({ name: new RegExp(`^${createBrandDto.name}$`, 'i') });
     if (exists) {
       throw new ConflictException('Brand name must be unique');
     }
 
-    const newBrand = new this.BrandModel(createBrandDto);
+    const imagePath = file?.path;
+
+    const newBrand = new this.BrandModel({
+      ...createBrandDto,
+      image: imagePath
+    });
+
     return newBrand.save();
   }
 
@@ -52,7 +58,7 @@ export class BrandService {
    * @param updateBrandDto - The data transfer object containing updated brand details 
    * @returns The updated brand
    */
-  async update(id: string, updateBrandDto: UpdateBrandDto): Promise<Brand> {
+  async update(id: string, updateBrandDto: UpdateBrandDto, file: Express.Multer.File): Promise<Brand> {
 
     const brand = await this.BrandModel.findById(id);
     if (!brand) {
@@ -64,7 +70,14 @@ export class BrandService {
       throw new ConflictException('Brand name must be unique');
     }
 
-    const updatedBrand = await this.BrandModel.findByIdAndUpdate(id, updateBrandDto, { new: true });
+    const imagePath = file?.path;
+    const updatedBrand = await this.BrandModel.findByIdAndUpdate(id,
+      {
+        ...updateBrandDto,
+        image: imagePath
+      },
+      { new: true });
+      
     if (!updatedBrand) {
       throw new ConflictException('Brand not found');
     }
@@ -72,6 +85,11 @@ export class BrandService {
     return updatedBrand;
   }
 
+  /**
+   * remove a brand by ID
+   * @param id - The ID of the brand to remove
+   * @returns The removed brand
+  */
   async remove(id: string): Promise<Brand> {
     const deletedBrand = await this.BrandModel.findByIdAndDelete(id);
     if (!deletedBrand) {
