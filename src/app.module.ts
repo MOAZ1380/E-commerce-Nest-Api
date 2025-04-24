@@ -5,6 +5,7 @@ import { CategoryModule } from './category/category.module';
 import { SubcategoryModule } from './subcategory/subcategory.module';
 import { BrandModule } from './brand/brand.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 
 
@@ -23,6 +24,7 @@ import { UserModule } from './user/user.module';
         uri: configService.get<string>('MONGO_URI')!,
       }),
     }),
+    AuthModule,
   ],
   controllers: [],
   providers: [],
