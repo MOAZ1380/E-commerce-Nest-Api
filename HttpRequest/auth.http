@@ -1,0 +1,21 @@
+POST  http://localhost:1000/auth/signUp
+Content-Type: application/json
+
+{
+    "name": "exampleUser",
+    "password": "examplePassword",
+    "email": "example1234@gmail.com"
+}
+
+###
+POST   http://localhost:1000/auth/signIn
+Content-Type: application/json
+
+{
+    "password": "examplePassword",
+    "email": "example1234@gmail.com"
+}
+
+###
+GET http://localhost:1000/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6ImV4YW1wbGUxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTc0NTQ4NjY5NSwiZXhwIjoxNzQ1NDkwMjk1fQ.MEQ9_OED51sTgiPJ2eEc225mX_IYU1EQESdc5B0Mdyk

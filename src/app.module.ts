@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
     SubcategoryModule,
     BrandModule,
     UserModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -24,7 +25,6 @@ import { AuthModule } from './auth/auth.module';
         uri: configService.get<string>('MONGO_URI')!,
       }),
     }),
-    AuthModule,
   ],
   controllers: [],
   providers: [],

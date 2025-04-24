@@ -26,7 +26,6 @@ export class User {
    email: string;
 
    @Prop({
-    select: false,
     required: [true, 'Password is required'],
     minLength: [6, 'Password must be at least 6 characters']
    })

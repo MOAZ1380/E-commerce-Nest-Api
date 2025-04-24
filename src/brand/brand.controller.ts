@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { ValidateObjectIdPipe } from 'src/utils/pipes/validate-object-id.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { createMulterOptions } from '../utils/uploads/uploadSingleImage';
+import { Roles } from 'src/auth/decorator/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
+import { JwtRolesGuard } from 'src/auth/guard/auth.guard';
 
 @Controller('api/brands')
 export class BrandController {
@@ -12,6 +15,8 @@ export class BrandController {
 
   @Post()
   @UseInterceptors(FileInterceptor('image', createMulterOptions('brands')))
+  @UseGuards(JwtRolesGuard)
+  @Roles(Role.Admin)
   create(
     @UploadedFile() file: Express.Multer.File,
     @Body(new ValidationPipe({
@@ -32,6 +37,8 @@ export class BrandController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtRolesGuard)
+  @Roles(Role.Admin)
   @UseInterceptors(FileInterceptor('image', createMulterOptions('brands')))
   update(
     @UploadedFile() file: Express.Multer.File,
@@ -44,6 +51,8 @@ export class BrandController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtRolesGuard)
+  @Roles(Role.Admin)
   remove(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.brandService.remove(id);
   }
