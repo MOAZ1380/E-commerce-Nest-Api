@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, ValidationPipe, UploadedFile, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, ValidationPipe, UploadedFile, UseGuards, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,11 +9,52 @@ import { ValidateObjectIdPipe } from 'src/utils/pipes/validate-object-id.pipe';
 import { JwtRolesGuard } from 'src/auth/guard/auth.guard';
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
+import { UpdateLoggedUserDto } from './dto/updateLoggedUser.dto';
 
 
 @Controller('api/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get('getMyData')
+  @UseGuards(JwtRolesGuard)
+  @Roles(Role.User, Role.Admin, Role.Manager)
+  getLoggedUser(@Req() req: Request) {
+    return this.userService.getLoggedUserData(req);
+  }
+
+
+  @Patch('updateMyPassword')
+  @UseGuards(JwtRolesGuard)
+  @Roles(Role.User, Role.Admin, Role.Manager)
+  updateMyPassword(@Req() req: Request) {
+    return this.userService.updateLoggedUserPassword(req);
+  }
+
+
+  @Patch('updateMe')
+  @UseInterceptors(FileInterceptor('profileImg', createMulterOptions('users')))
+  @UseGuards(JwtRolesGuard)
+  @Roles(Role.User, Role.Admin, Role.Manager)
+  updateMe(
+    @UploadedFile() file: Express.Multer.File,
+    @Body(new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    })) updateLoggedUserDto: UpdateLoggedUserDto,
+    @Req() req: Request
+  ) {
+    return this.userService.updateLoggedUserData(updateLoggedUserDto, file, req);
+  }
+
+  
+  @Patch('DeleteMyAccount')
+  @UseGuards(JwtRolesGuard)
+  @Roles(Role.User, Role.Admin, Role.Manager)
+  deleteMyAccount(@Req() req: Request) {
+    return this.userService.deleteLoggedUserAccount(req);
+  }
+  
 
   @Post()
   @UseInterceptors(FileInterceptor('profileImg', createMulterOptions('users')))
@@ -61,4 +103,8 @@ export class UserController {
   remove(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.userService.remove(id);
   }
+
+
+  
+
 }

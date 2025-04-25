@@ -1,3 +1,4 @@
+
 POST  http://localhost:1000/auth/signUp
 Content-Type: application/json
 
@@ -12,10 +13,33 @@ POST   http://localhost:1000/auth/signIn
 Content-Type: application/json
 
 {
-    "password": "examplePassword",
-    "email": "example1234@gmail.com"
+    "password": "12345678900",
+    "email": "moaz469654@gmail.com"
 }
 
-###
-GET http://localhost:1000/auth/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6ImV4YW1wbGUxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTc0NTQ4NjY5NSwiZXhwIjoxNzQ1NDkwMjk1fQ.MEQ9_OED51sTgiPJ2eEc225mX_IYU1EQESdc5B0Mdyk
+### Forgot Password
+POST   http://localhost:1000/auth/forgotPassword
+Content-Type: application/json
+
+{
+    "email": "moaz469654@gmail.com"
+}
+
+### verifyCode
+POST   http://localhost:1000/auth/verifyCode
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJlbWFpbCI6Im1vYXo0Njk2NTRAZ21haWwuY29tIiwiaWF0IjoxNzQ1NTg4NTAwLCJleHAiOjE3NDU1ODk0MDB9.IheAVzvHECAQ-FeL_FW70GcfZiuNUFMWMCUk6GXBRXQ
+
+{
+    "code" : "524948"
+}
+
+### Reset Password
+POST   http://localhost:1000/auth/resetPassword
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJpYXQiOjE3NDU1ODg1MzgsImV4cCI6MTc0NTY3NDkzOH0.aDFSlwakbn9DWj6aH_QAgxQmERW3IINk4rCyaSWtQt4
+
+{
+"password" : "12345678900"
+}
+    

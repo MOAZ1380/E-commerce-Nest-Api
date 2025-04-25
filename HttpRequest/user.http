@@ -1,32 +1,63 @@
 ### Create a new user
 POST http://localhost:1000/api/users
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6Im1vYXoxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTU4NjMxMCwiZXhwIjoxNzQ1NTg5OTEwfQ.6OHphggYaVbnNdsVb17fo0YzmNFWiKVQFMultdpOrRA
 
 {
-    "name": "John Doe",
-    "email": "John12334ew@gmail.co",
+    "name": "Moaz sayed",
+    "email": "moaz469654@gmail.com",
     "role": "admin",
-    "password": "12345678",
-    "phone": "1234567890"
+    "password": "12345600"
 }
 
 ### Get all users
 GET http://localhost:1000/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6ImV4YW1wbGUxMjM0QGdtYWlsLmNvbSIsImlhdCI6MTc0NTQ4NjY5NSwiZXhwIjoxNzQ1NDkwMjk1fQ.MEQ9_OED51sTgiPJ2eEc225mX_IYU1EQESdc5B0Mdyk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJlbWFpbCI6Im1vYXo0Njk2NTRAZ21haWwuY29tIiwiaWF0IjoxNzQ1NTg4NTg4LCJleHAiOjE3NDU1OTIxODh9.uHoipn55Abkq1oN95jKbAec8qtC1jdM36P6_Xmm19ds
 
+###
+GET http://localhost:1000/api/users/6808d6df1d31d7945bf84ce7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6Im1vYXoxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTQ5ODg0MSwiZXhwIjoxNzQ1NTAyNDQxfQ.bMBMH3L1j_gDXvAWeyaEMSWeIYZKSWv35l3Q585hEVA
 
-### Get a user by ID
-GET http://localhost:1000/api/users/6808d89d533b43d935e7057d
 
 
 ### Update a user by ID
-PATCH http://localhost:1000/api/users/6808d89d533b43d935e7057d
+PATCH http://localhost:1000/api/users/6808d6df1d31d7945bf84ce7
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6Im1vYXoxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTQ5ODg0MSwiZXhwIjoxNzQ1NTAyNDQxfQ.bMBMH3L1j_gDXvAWeyaEMSWeIYZKSWv35l3Q585hEVA
 
 {
-    "name": "John Doooo",
-    "email": "new@gmail.com"
+    "email": "moaz123@gmail.com",
+    "role": "user"
 }
 
 ### Delete a user by ID
 DELETE http://localhost:1000/api/users/6808d89d533b43d935e7057d
+
+
+### Get my profile
+GET http://localhost:1000/api/users/getMyData/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6Im1vYXoxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTUzNzM1MSwiZXhwIjoxNzQ1NTQwOTUxfQ.F4eEWt_jCj-7q-kImhN6BIlHILJp9gibqDGajhTIYBw
+
+### Update password
+PATCH  http://localhost:1000/api/users/updateMyPassword
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6Im1vYXoxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTUzNDgyMCwiZXhwIjoxNzQ1NTM4NDIwfQ.NuDwvLh8M1zVH0iVbVqSREwl_RGITQtkcZFUHq5oROQ
+
+{
+    "newPassword": "12345678910"
+}
+
+
+### Update my profile
+PATCH http://localhost:1000/api/users/updateMe
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6Im1vYXoxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTUzNjE0NiwiZXhwIjoxNzQ1NTM5NzQ2fQ.MSFH_VWSv7TnnL8FTMkfmejGT5KEmwOLzhVbQFGRPOU
+    
+{
+    "name": "updatemyname"
+}
+
+### Delete my profile
+PATCH http://localhost:1000/api/users/DeleteMyAccount
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6Im1vYXoxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTUzNzM1MSwiZXhwIjoxNzQ1NTQwOTUxfQ.F4eEWt_jCj-7q-kImhN6BIlHILJp9gibqDGajhTIYBw

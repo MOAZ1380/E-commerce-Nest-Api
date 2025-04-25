@@ -39,7 +39,7 @@ export class User {
 
     @Prop({
     required: [true, 'Role is required'],
-    enum: ['admin', 'user'],
+    enum: ['admin', 'manager', 'user'],
     default: 'user'
     })
     role: string;
@@ -48,6 +48,20 @@ export class User {
       default: true,  
     })
     isActive: boolean;
+
+    @Prop()
+    passwordChangeAt: Date;
+
+    @Prop()
+    passwordResetCode: string;
+
+    @Prop({ type: Date, default: null })
+    passwordResetExpires: Date | null;;
+
+    @Prop()
+    passwordResetVerified: boolean;
+
+
 
 }
 

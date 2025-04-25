@@ -29,10 +29,8 @@ export class JwtRolesGuard implements CanActivate {
       throw new UnauthorizedException('No token provided');
     }
 
-    const token = authHeader.split(' ')[1];
-    if (!token) {
-      throw new UnauthorizedException('No token provided');
-    }
+    const token = authHeader?.startsWith('Bearer ') ? authHeader.split(' ')[1] : null;
+    if (!token) throw new UnauthorizedException('Invalid authorization header format');
 
     try {
       interface DecodedToken {
@@ -48,14 +46,13 @@ export class JwtRolesGuard implements CanActivate {
       } catch {
         throw new UnauthorizedException('Token is invalid or expired');
       }
-
-      console.log('Decoded token:', decoded);
       
-      const user = await this.UserModel.findById(decoded.userId);
+      
+      const user = await this.UserModel.findById(decoded.userId.toString()).exec();
       if (!user) {
         throw new UnauthorizedException('User not found');
       }
-
+      
       const userRoles: string[] = Array.isArray(user.role) ? user.role : [user.role];
 
       if (!roles || roles.length === 0) {
@@ -63,10 +60,7 @@ export class JwtRolesGuard implements CanActivate {
         return true;
       }
 
-      const hasRole = () => roles.some((role) => {
-        console.log('Checking role:', role, '| User roles:', userRoles);
-        return  userRoles.includes(role);
-      })
+      const hasRole = () => roles.some((role) => userRoles.includes(role));
 
       if (!hasRole()) {
         throw new UnauthorizedException(
@@ -74,7 +68,16 @@ export class JwtRolesGuard implements CanActivate {
         );
       }
 
-      console.log('Authorized user:', user.email, '| Roles:', userRoles);
+      if (user.passwordChangeAt){
+        const passwordChangeAt = Math.floor(user.passwordChangeAt.getTime() / 1000);
+        if (decoded.iat && decoded.iat < passwordChangeAt) {
+          throw new UnauthorizedException('Password has been changed, please log in again');
+        }
+      }
+
+      if (user.isActive === false) {
+        throw new UnauthorizedException('User is inactive');
+      }
 
       request['InfUser'] = user;
       return true;

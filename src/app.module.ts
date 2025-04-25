@@ -6,16 +6,13 @@ import { SubcategoryModule } from './subcategory/subcategory.module';
 import { BrandModule } from './brand/brand.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { EmailModule } from './email/email.module';
+import { ProductModule } from './product/product.module';
 
 
 
 @Module({
   imports: [
-    CategoryModule,
-    SubcategoryModule,
-    BrandModule,
-    UserModule,
-    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -25,6 +22,13 @@ import { AuthModule } from './auth/auth.module';
         uri: configService.get<string>('MONGO_URI')!,
       }),
     }),
+    CategoryModule,
+    SubcategoryModule,
+    BrandModule,
+    UserModule,
+    AuthModule,
+    EmailModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [],
