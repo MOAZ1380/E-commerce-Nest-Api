@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
 import { ProductModule } from './product/product.module';
+import { ReviewModule } from './review/review.module';
 
 
 
@@ -29,6 +30,7 @@ import { ProductModule } from './product/product.module';
     AuthModule,
     EmailModule,
     ProductModule,
+    ReviewModule,
   ],
   controllers: [],
   providers: [],

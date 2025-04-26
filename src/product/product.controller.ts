@@ -9,7 +9,7 @@ import { createMulterOptions } from 'src/utils/uploads/uploadSingleImage';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Post()
+  @Post() // error in uploading images
   @UseInterceptors(FilesInterceptor('images', 10, createMulterOptions('products')))
   create(
       @UploadedFiles() images: Express.Multer.File[],
@@ -32,7 +32,7 @@ export class ProductController {
     return this.productService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch(':id') // error in uploading images
   @UseInterceptors(FilesInterceptor('images', 10, createMulterOptions('products')))
   update(
     @UploadedFiles() images: Express.Multer.File[],

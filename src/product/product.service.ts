@@ -93,8 +93,8 @@ export class ProductService {
    * @param colors - The new colors for the product.
    * @returns The updated product.
    */
-  async update(id: string, updateProductDto: UpdateProductDto, imageCover?: Express.Multer.File, colors?: Express.Multer.File[]) {
-      if (updateProductDto.category) {
+  async update(id: string, updateProductDto: UpdateProductDto, imageCover?: Express.Multer.File, colors?: Express.Multer.File[]) {      
+    if (updateProductDto.category) {
       const categoryExists = await this.Category.findById(updateProductDto.category);
       if (!categoryExists) {
         throw new BadRequestException('Category not found');
@@ -119,8 +119,8 @@ export class ProductService {
       }
     }
 
-    const existingProduct = await this.Product.findOne({ title: new RegExp(`^${updateProductDto.title}$`, 'i') });
     if (updateProductDto.title) {
+      const existingProduct = await this.Product.findOne({ title: new RegExp(`^${updateProductDto.title}$`, 'i') });
       if (existingProduct && existingProduct._id.toString() !== id) {
         throw new ConflictException('Product with this title already exists');
       }

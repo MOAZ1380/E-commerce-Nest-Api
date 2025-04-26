@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, IsNumber, Min, Max, IsArray, IsMongoId, MaxLength, MinLength } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsNumber, Min, Max, IsMongoId, MaxLength, MinLength } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateProductDto {
@@ -44,7 +44,7 @@ export class CreateProductDto {
   @IsMongoId()
   category: string;
 
-  @IsArray()
+
   @IsMongoId({ each: true })
   subcategory: string[];
 
