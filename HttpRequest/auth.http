@@ -1,4 +1,4 @@
-
+### Sign Up
 POST  http://localhost:1000/auth/signUp
 Content-Type: application/json
 

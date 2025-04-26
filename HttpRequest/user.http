@@ -1,14 +1,23 @@
 ### Create a new user
 POST http://localhost:1000/api/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBhMDI2NzRjZmFmYzczOTdjNTZmMzMiLCJlbWFpbCI6Im1vYXoxQGdtYWlsLmNvbSIsImlhdCI6MTc0NTU4NjMxMCwiZXhwIjoxNzQ1NTg5OTEwfQ.6OHphggYaVbnNdsVb17fo0YzmNFWiKVQFMultdpOrRA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJlbWFpbCI6Im1vYXo0Njk2NTRAZ21haWwuY29tIiwiaWF0IjoxNzQ1NjY1NjM3LCJleHAiOjE3NDU2NjkyMzd9.CBzpsPEm1u823P0J7_PbBkuY5c2uNDZbL-b-R_Pe79k
+
 
 {
-    "name": "Moaz sayed",
-    "email": "moaz469654@gmail.com",
-    "role": "admin",
-    "password": "12345600"
+  "name": "John Doe",
+  "password": "ExamplePassword123",
+  "email": "johndoe@example.com",
+  "address": {
+    "street": "123 Main Street",
+    "city": "New York",
+    "state": "New York",
+    "country": "USA",
+    "zipCode": "10001",
+    "mainAddress": true
+  }
 }
+
 
 ### Get all users
 GET http://localhost:1000/api/users

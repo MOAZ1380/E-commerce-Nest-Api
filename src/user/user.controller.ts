@@ -65,7 +65,8 @@ export class UserController {
     @Body(new ValidationPipe({
     whitelist: true,
     transform: true,
-  })) createUserDto: CreateUserDto) {
+  })) createUserDto: CreateUserDto
+  ) {
     return this.userService.create(createUserDto, file);
   }
 
