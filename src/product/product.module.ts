@@ -18,6 +18,6 @@ import { BrandModule } from 'src/brand/brand.module';
     ],
   controllers: [ProductController],
   providers: [ProductService],
-  exports: [ProductService],
+  exports: [ProductService, MongooseModule],
 })
 export class ProductModule {}

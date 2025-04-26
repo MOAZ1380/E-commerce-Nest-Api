@@ -1,0 +1,12 @@
+### create review
+POST http://localhost:1000/api/review/product/680be5efd41449d79ab00393/review
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJlbWFpbCI6Im1vYXo0Njk2NTRAZ21haWwuY29tIiwiaWF0IjoxNzQ1Njk0NzIwLCJleHAiOjE3NDU2OTgzMjB9.5SZ84ZG5oC5oLlxshMwuVrkPPCzxYrZYORLi3Bxrd0A
+
+{
+    "title" : "good product",
+    "ratings" : 5
+}
+
+### get all reviews for a product
+GET http://localhost:1000/api/review/product/680be5efd41449d79ab00393/review

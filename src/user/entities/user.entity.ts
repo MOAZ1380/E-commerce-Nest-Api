@@ -71,6 +71,12 @@ export class User {
         ref: 'Product',
     })
     whishlist: Types.ObjectId[]; 
+
+    @Prop({
+        type: [Types.ObjectId],
+        ref: 'Review',
+    })
+    reviews: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

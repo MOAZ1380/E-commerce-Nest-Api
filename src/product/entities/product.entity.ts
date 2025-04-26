@@ -3,6 +3,7 @@ import { HydratedDocument, Types } from 'mongoose';
 
 export type ProductDocument = HydratedDocument<Product>;
 
+
 @Schema({ timestamps: true })
 export class Product {
     @Prop({
@@ -86,6 +87,12 @@ export class Product {
         default: 0
     })
     ratingsQuantity?: number;   
+
+    @Prop({
+        type: [Types.ObjectId],
+        ref: 'Review'
+    })
+    reviews?: Types.ObjectId[];
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
@@ -103,3 +110,10 @@ ProductSchema.pre('findOneAndUpdate', function (next) {
     }
     next();
 });
+
+ProductSchema.pre('findOne', function (next) {
+    this.populate('category').populate('subcategory').populate('brand').populate('reviews');
+    next();
+});
+
+

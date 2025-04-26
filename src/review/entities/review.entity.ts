@@ -25,14 +25,14 @@ export class Review {
         ref: 'User',
         required: [true, 'user is required'],
     })
-    user: Types.ObjectId; 
+    userId: Types.ObjectId; 
 
     @Prop({
         type: Types.ObjectId,
         ref: 'Product',
         required: [true, 'product is required'],
     })
-    Product: Types.ObjectId
+    productId: Types.ObjectId
      
 }
 

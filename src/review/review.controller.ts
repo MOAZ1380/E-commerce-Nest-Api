@@ -1,20 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
+import { Roles } from 'src/auth/decorator/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
+import { JwtRolesGuard } from 'src/auth/guard/auth.guard';
 
-@Controller('review')
+@Controller('api/review/product/:productId/review')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
   @Post()
-  create(@Body() createReviewDto: CreateReviewDto) {
-    return this.reviewService.create(createReviewDto);
+  @UseGuards(JwtRolesGuard)
+  @Roles(Role.User, Role.Admin, Role.Manager)
+  create(
+  @Req() req: Request,
+  @Param('productId') productId: string,
+  @Body() createReviewDto: CreateReviewDto
+  ) {
+    return this.reviewService.create({ ...createReviewDto, productId }, req);
   }
 
   @Get()
-  findAll() {
-    return this.reviewService.findAll();
+  findAll(@Param('productId') productId: string) {
+    return this.reviewService.findAll(productId);
   }
 
   @Get(':id')
