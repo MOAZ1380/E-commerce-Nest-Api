@@ -22,6 +22,13 @@ export class EmailService {
     });
   }
 
+  /**
+   * Sends a password reset email with a verification code.
+   * @param to - The recipient's email address.
+   * @param subject - The subject of the email.
+   * @param code - The verification code to include in the email.
+   * @returns A promise that resolves when the email is sent successfully.
+   */
   async sendMail(to: string, subject: string, code: string) {
     const mailOptions = {
       from: process.env.EMAIL_USER,

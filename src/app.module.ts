@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { EmailModule } from './email/email.module';
 import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
+import { WishlistModule } from './wishlist/wishlist.module';
+import { AddressModule } from './address/address.module';
 
 
 
@@ -31,6 +33,8 @@ import { ReviewModule } from './review/review.module';
     EmailModule,
     ProductModule,
     ReviewModule,
+    WishlistModule,
+    AddressModule,
   ],
   controllers: [],
   providers: [],

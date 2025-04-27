@@ -1,12 +1,28 @@
 ### create review
-POST http://localhost:1000/api/review/product/680be5efd41449d79ab00393/review
+POST http://localhost:1000/api/product/680be5efd41449d79ab00393/review
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJlbWFpbCI6Im1vYXo0Njk2NTRAZ21haWwuY29tIiwiaWF0IjoxNzQ1Njk0NzIwLCJleHAiOjE3NDU2OTgzMjB9.5SZ84ZG5oC5oLlxshMwuVrkPPCzxYrZYORLi3Bxrd0A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJlbWFpbCI6Im1vYXo0Njk2NTRAZ21haWwuY29tIiwiaWF0IjoxNzQ1NzUyNzY0LCJleHAiOjE3NDU3NTYzNjR9.Uq1Dq7HedodMuaGmW8O-6p-bXZyXBrBL1AwXNgpqM3A
 
 {
     "title" : "good product",
-    "ratings" : 5
+    "ratings" : 4
 }
 
 ### get all reviews for a product
-GET http://localhost:1000/api/review/product/680be5efd41449d79ab00393/review
+GET http://localhost:1000/api/product/680be5efd41449d79ab00393/review
+
+
+### get single review
+GET http://localhost:1000/api/review/680e1717ae5dfd453a0e05ca
+
+### update review
+PATCH http://localhost:1000/api/review/680d3050dd29e4536548172f
+Content-Type: application/json
+
+{
+    "title" : "good product",
+    "ratings" : 2
+}
+
+### delete review
+DELETE http://localhost:1000/api/review/680e1717ae5dfd453a0e05ca

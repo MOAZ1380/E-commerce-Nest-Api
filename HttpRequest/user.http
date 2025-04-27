@@ -1,13 +1,13 @@
 ### Create a new user
 POST http://localhost:1000/api/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJlbWFpbCI6Im1vYXo0Njk2NTRAZ21haWwuY29tIiwiaWF0IjoxNzQ1NjY1NjM3LCJleHAiOjE3NDU2NjkyMzd9.CBzpsPEm1u823P0J7_PbBkuY5c2uNDZbL-b-R_Pe79k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBiODhjZDg3NjE5YmI1NmI5MDM5MDUiLCJlbWFpbCI6Im1vYXo0Njk2NTRAZ21haWwuY29tIiwiaWF0IjoxNzQ1NzY1NTQyLCJleHAiOjE3NDU3NjkxNDJ9.BlcaZPfo19WLHHqOf3TELmI8HQi0Q69S_0cI09_uJeY
 
 
 {
-  "name": "John Doe",
-  "password": "ExamplePassword123",
-  "email": "johndoe@example.com",
+  "name": "Moaz sayed",
+  "password": "12345600",
+  "email": "admin1@gmail.com",
   "address": {
     "street": "123 Main Street",
     "city": "New York",

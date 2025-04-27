@@ -70,7 +70,7 @@ export class User {
         type: [Types.ObjectId],
         ref: 'Product',
     })
-    whishlist: Types.ObjectId[]; 
+    wishlist: Types.ObjectId[]; 
 
     @Prop({
         type: [Types.ObjectId],

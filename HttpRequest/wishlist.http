@@ -1,0 +1,24 @@
+### Create a new wishlist item
+POST http://localhost:1000/api/wishlist
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU3NjY3NjcsImV4cCI6MTc0NTc3MDM2N30.miF4klKvu55-FwjOXm4nDYElS2ti2iHOv8HhrxJpNxQ
+Content-Type: application/json
+
+
+{
+  "product": "680be5efd41449d79ab00393"
+}
+
+
+### Get all wishlist items
+GET http://localhost:1000/api/wishlist
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU3NjY3NjcsImV4cCI6MTc0NTc3MDM2N30.miF4klKvu55-FwjOXm4nDYElS2ti2iHOv8HhrxJpNxQ
+
+
+### remove from wishlist
+DELETE http://localhost:1000/api/wishlist/680be5efd41449d79ab00393
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU3NjY3NjcsImV4cCI6MTc0NTc3MDM2N30.miF4klKvu55-FwjOXm4nDYElS2ti2iHOv8HhrxJpNxQ
+
+
+### Get a single wishlist item
+GET http://localhost:1000/api/wishlist/680be5efd41449d79ab00393
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU3NjY3NjcsImV4cCI6MTc0NTc3MDM2N30.miF4klKvu55-FwjOXm4nDYElS2ti2iHOv8HhrxJpNxQ

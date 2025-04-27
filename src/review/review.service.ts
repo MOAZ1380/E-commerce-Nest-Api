@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Review, ReviewDocument } from './entities/review.entity';
 import { Product, ProductDocument } from 'src/product/entities/product.entity';
 import { User, UserDocument } from 'src/user/entities/user.entity';
@@ -14,9 +14,17 @@ export class ReviewService {
     @InjectModel(Product.name) private ProductModel: Model<ProductDocument>,
     @InjectModel(User.name) private UserModel: Model<UserDocument>
    ) {}
-  
-  async create(createReviewDto: CreateReviewDto, req: Request) {
-    const existingProduct = await this.ProductModel.findById(createReviewDto.productId);
+
+
+  /**
+    * Create a new review for a product
+    * @param createReviewDto - The review data to create
+    * @param productId - The ID of the product to review
+    * @param req - The request object containing user information
+    * @returns The created review and a success message
+  */
+  async create(createReviewDto: CreateReviewDto, productId: string , req: Request) {
+    const existingProduct = await this.ProductModel.findById(productId);
     if (!existingProduct) {
       throw new BadRequestException('Product not found');
     }
@@ -37,7 +45,7 @@ export class ReviewService {
       throw new BadRequestException('Error creating review');
     }
     const product = await this.ProductModel.findByIdAndUpdate(
-      createReviewDto.productId,
+      productId,
       { $push: { reviews: newReview._id } },
       { new: true }
     );
@@ -56,20 +64,78 @@ export class ReviewService {
     return {"message": "Review created successfully", review: newReview };
   }
 
-  findAll(productId: string) {
+  /**
+   * Find all reviews for a product
+   * @param productId - The ID of the product to find reviews for
+   * @returns An array of reviews for the product
+  */
+  async findAll(productId: string) { // error here
     console.log(productId);
-    return this.ReviewModel.find({ productId: productId.toString() }). populate('userId').exec();
-  }  
 
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
+    const productObjectId = new Types.ObjectId(productId);
+    if (!productObjectId) {
+      throw new BadRequestException('Invalid product ID format');
+    }
+
+    
+    const product = await this.ProductModel.findById(productObjectId).exec();
+    if (!product) {
+      throw new BadRequestException('Product not found');
+    }
+
+    const reviews = await this.ReviewModel.find({ productId: productObjectId }).exec();
+
+    if (!reviews || reviews.length === 0) {
+      throw new BadRequestException('No reviews found for this product');
+    }
+
+    return reviews;
+  }
+  
+
+
+  /**
+   * Find a review by its ID
+   * @param id - The ID of the review to find
+   * @returns The review object if found, otherwise throws an error
+   */
+  async findOne(id: string) {
+    const review = await this.ReviewModel.findById(id).exec();
+    if (!review) {
+      throw new BadRequestException('Review not found');
+    }
+    return review; 
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
+  /**
+   * Update a review by its ID
+   * @param id - The ID of the review to update
+   * @param updateReviewDto - The updated review data
+   * @returns The updated review object if found, otherwise throws an error
+   */
+  async update(id: string, updateReviewDto: UpdateReviewDto) {
+    const review = await this.ReviewModel.findByIdAndUpdate(
+      id,
+      updateReviewDto,
+      { new: true }
+    ).exec(); 
+
+    if (!review) {
+      throw new BadRequestException('Review not found');
+    }
+    return review;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} review`;
-  }
+  /**
+   * Delete a review by its ID
+   * @param id - The ID of the review to delete
+   * @returns A success message if the review is deleted, otherwise throws an error
+   */
+  async remove(id: string) {
+    const deleteReview = await this.ReviewModel.findByIdAndDelete(id)
+      if (!deleteReview) {
+        throw new BadRequestException('Review not found');
+      }
+      return { message: 'Review deleted successfully' };
+    }
 }

@@ -16,6 +16,13 @@ export class AuthService {
       private readonly emailService: EmailService,
     ) {}
   
+
+
+    /**
+     * Sign in a user with email and password
+     * @param loginAuthDto - The login data containing email and password
+     * @return An object containing the user and a JWT token
+    */
     async signIn(loginAuthDto: LoginAuthDto) {
       const { email, password } = loginAuthDto;
     
@@ -43,48 +50,57 @@ export class AuthService {
     
 
 
-  async signUp(createAuthDto: CreateAuthDto) {
-    const { email } = createAuthDto;
+    /**
+     * Sign up a new user with email and password
+     * @param createAuthDto - The sign-up data containing email and password
+     * @return An object containing the created user and a JWT token
+    */
+    async signUp(createAuthDto: CreateAuthDto) {
+      const { email } = createAuthDto;
 
-    try {
-      const existingUser = await this.UserModel.findOne({ email }).exec();
-      if ( existingUser) {
-        throw new ConflictException('this user already exists Please login');
-      }
+      try {
+        const existingUser = await this.UserModel.findOne({ email }).exec();
+        if ( existingUser) {
+          throw new ConflictException('this user already exists Please login');
+        }
 
-      const newUser = await this.UserModel.create(createAuthDto);
-      if (!newUser) {
+        const newUser = await this.UserModel.create(createAuthDto);
+        if (!newUser) {
+          throw new ConflictException('Error creating user');
+        }
+        const payload = { userId: newUser._id, email: newUser.email };
+        const token = this.jwtService.sign(payload, {
+          expiresIn: '1h',
+        });
+
+        return {
+          user: newUser,
+          token,
+        };
+      } catch (error) {
+        if (error.code === 11000) {
+          throw new ConflictException('Email already exists');
+        }
         throw new ConflictException('Error creating user');
       }
-      const payload = { userId: newUser._id, email: newUser.email };
-      const token = this.jwtService.sign(payload, {
-        expiresIn: '1h',
-      });
-
-      return {
-        user: newUser,
-        token,
-      };
-    } catch (error) {
-      if (error.code === 11000) {
-        throw new ConflictException('Email already exists');
-      }
-      throw new ConflictException('Error creating user');
     }
-  }
 
+    /**
+     * Verify the JWT token and return the user information
+     * @param token - The JWT token to verify
+     * @return The user information if the token is valid
+    */
+    async forgotPassword(email: string) {
+    const user = await this.UserModel.findOne({ email }).exec()
+    if (!user) {
+      throw new BadRequestException('User not found')
+    }
 
-  async forgotPassword(email: string) {
-   const user = await this.UserModel.findOne({ email }).exec()
-   if (!user) {
-    throw new BadRequestException('User not found')
-   }
+      const code = Math.floor(100000 + Math.random() * 900000).toString()
+      const hashedCode = await bcrypt.hash(code, 10)
 
-    const code = Math.floor(100000 + Math.random() * 900000).toString()
-    const hashedCode = await bcrypt.hash(code, 10)
-
-    user.passwordResetCode = hashedCode
-    user.passwordResetExpires = new Date(Date.now() + 15 * 60 * 1000) // 15 minutes from now
+      user.passwordResetCode = hashedCode
+      user.passwordResetExpires = new Date(Date.now() + 15 * 60 * 1000) // 15 minutes from now
     user.passwordResetVerified = false
 
     await this.emailService.sendMail(email, 'Reset Your Password', code);
@@ -98,6 +114,13 @@ export class AuthService {
     return { message: 'Password reset code sent to your email', token }
   }
 
+
+  /**
+   * Verify the password reset code
+   * @param code - The password reset code to verify
+   * @param req - The request object containing user information
+   * @return A message indicating the result of the verification
+  */
   async verifyCode(code: string, req: Request) {
     const userId = req['InfUser']._id as UserDocument;
     const user = await this.UserModel.findById(userId).exec();
@@ -132,6 +155,13 @@ export class AuthService {
     return { message: 'Password reset code verified successfully', token };
   }
   
+
+  /**
+   * Reset the user's password
+   * @param newPassword - The new password to set
+   * @param req - The request object containing user information
+   * @return A message indicating the result of the password reset
+  */
   async resetPassword(newPassword: string, req: Request) {
     const userId = req['InfUser']._id as UserDocument;
     const user = await this.UserModel.findById(userId).exec();
@@ -148,7 +178,6 @@ export class AuthService {
       throw new BadRequestException('Password reset code has expired');
     }
   
-    // Encrypt the new password before saving
     user.password = newPassword;
   
     const token = this.jwtService.sign({ userId: user._id }, { expiresIn: '10d' });
