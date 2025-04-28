@@ -1,0 +1,27 @@
+### create cupon
+POST http://localhost:1000/api/cupon
+Content-Type: application/json
+
+{
+    "code" : "cupon3",
+    "expire" : "2028-10-31T23:59:59.999Z",
+    "discount" : 10
+}
+
+### get all cupons
+GET http://localhost:1000/api/cupon
+
+### get cupon by id
+GET http://localhost:1000/api/cupon/680f5f186ba8e4cd2eeb91f4
+
+
+### update cupon by id
+PATCH  http://localhost:1000/api/cupon/680f5f186ba8e4cd2eeb91f4
+Content-Type: application/json
+
+{
+   "code" : "cupon3"
+}
+
+### delete cupon by id
+DELETE http://localhost:1000/api/cupon/680f5f186ba8e4cd2eeb91f4

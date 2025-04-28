@@ -11,6 +11,7 @@ import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { AddressModule } from './address/address.module';
+import { CuponModule } from './cupon/cupon.module';
 
 
 
@@ -35,6 +36,7 @@ import { AddressModule } from './address/address.module';
     ReviewModule,
     WishlistModule,
     AddressModule,
+    CuponModule,
   ],
   controllers: [],
   providers: [],

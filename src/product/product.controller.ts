@@ -4,6 +4,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { createMulterOptions } from 'src/utils/uploads/uploadSingleImage';
+import { ValidateObjectIdPipe } from 'src/utils/pipes/validate-object-id.pipe';
 
 @Controller('api/product')
 export class ProductController {
@@ -28,7 +29,7 @@ export class ProductController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.productService.findOne(id);
   }
 
@@ -36,7 +37,7 @@ export class ProductController {
   @UseInterceptors(FilesInterceptor('images', 10, createMulterOptions('products')))
   update(
     @UploadedFiles() images: Express.Multer.File[],
-    @Param('id') id: string,
+    @Param('id', ValidateObjectIdPipe) id: string,
     @Body(new ValidationPipe({ whitelist: true, transform: true,})) updateProductDto: UpdateProductDto
   ) {
     let imageCover: Express.Multer.File | undefined;
@@ -50,7 +51,7 @@ export class ProductController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.productService.remove(id)
   }
 }

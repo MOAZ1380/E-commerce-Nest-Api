@@ -5,6 +5,7 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { JwtRolesGuard } from 'src/auth/guard/auth.guard';
+import { ValidateObjectIdPipe } from 'src/utils/pipes/validate-object-id.pipe';
 
 @Controller('api/address')
 export class AddressController {
@@ -28,19 +29,19 @@ export class AddressController {
 
   @Get(':id')
   @UseGuards(JwtRolesGuard)
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.addressService.findOne(id);
   }
 
   @Patch(':id')
   @UseGuards(JwtRolesGuard)
-  update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
+  update(@Param('id', ValidateObjectIdPipe) id: string, @Body() updateAddressDto: UpdateAddressDto) {
     return this.addressService.update(id, updateAddressDto);
   }
 
   @Delete(':id')
   @UseGuards(JwtRolesGuard)
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.addressService.remove(id);
   }
 }
