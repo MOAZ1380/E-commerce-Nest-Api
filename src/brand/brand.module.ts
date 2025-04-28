@@ -10,7 +10,7 @@ import { UserModule } from 'src/user/user.module';
     UserModule,
     MongooseModule.forFeature([
           { name: Brand.name, schema: BrandSchema },
-        ])
+      ])
   ],
   controllers: [BrandController],
   providers: [BrandService],

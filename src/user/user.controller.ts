@@ -104,8 +104,5 @@ export class UserController {
   remove(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.userService.remove(id);
   }
-
-
-  
-
 }
+

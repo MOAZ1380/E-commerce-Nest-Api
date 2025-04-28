@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-import { Address } from './address.entity';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -62,8 +61,12 @@ export class User {
     @Prop()
     passwordResetVerified: boolean;
 
-    @Prop({ type: [Address] }) 
-    address: Address[]; 
+    @Prop({ 
+      type: [Types.ObjectId],
+      ref: 'Address',
+      default: []
+  }) 
+    address: Types.ObjectId[];
 
     
     @Prop({ 

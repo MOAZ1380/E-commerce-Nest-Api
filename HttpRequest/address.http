@@ -1,0 +1,39 @@
+### create address
+POST http://localhost:1000/api/address
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MjUxNjEsImV4cCI6MTc0NTgyODc2MX0.kYme6ELYaeOs0P6gDwIqhMNw-pWGqP0Myhvuoh2_JGc
+
+{
+    "street": "123 Main Stas",
+    "city": "Anytownds",
+    "state": "CAd",
+    "country": "USA",
+    "zipCode": "1234567"
+}
+
+
+### get address for user
+GET http://localhost:1000/api/address
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MjUxNjEsImV4cCI6MTc0NTgyODc2MX0.kYme6ELYaeOs0P6gDwIqhMNw-pWGqP0Myhvuoh2_JGc
+
+### get addresss
+GET http://localhost:1000/api/address/680f2ff73a33d61feef17744
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MjUxNjEsImV4cCI6MTc0NTgyODc2MX0.kYme6ELYaeOs0P6gDwIqhMNw-pWGqP0Myhvuoh2_JGc
+
+
+### update address by id
+PATCH http://localhost:1000/api/address/680f2ff73a33d61feef17744
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MjUxNjEsImV4cCI6MTc0NTgyODc2MX0.kYme6ELYaeOs0P6gDwIqhMNw-pWGqP0Myhvuoh2_JGc
+Content-Type: application/json
+
+{
+    "street": "updated street",
+    "city": "Anytown",
+    "state": "CA",
+    "country": "USA",
+    "zipCode": "12345"
+}
+
+### delete address by id
+DELETE http://localhost:1000/api/address/680f2ff73a33d61feef17744
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODBlNDk1MGEzYWI4NTJmYWEyZWQ2ZTEiLCJlbWFpbCI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE3NDU4MjUxNjEsImV4cCI6MTc0NTgyODc2MX0.kYme6ELYaeOs0P6gDwIqhMNw-pWGqP0Myhvuoh2_JGc

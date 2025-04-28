@@ -1,6 +1,4 @@
-import { Type } from "class-transformer";
-import { IsNotEmpty, IsString, MinLength, MaxLength, IsEmail, IsOptional, ValidateNested } from "class-validator";
-import { AddressDto } from "./create-address.dto";
+import { IsNotEmpty, IsString, MinLength, MaxLength, IsEmail, IsOptional } from "class-validator";
 
 export class CreateUserDto {
     @IsNotEmpty({ message: 'Name is required' })
@@ -33,7 +31,4 @@ export class CreateUserDto {
     @IsString({ message: 'Role must be a string' })
     role?: string;
 
-    @ValidateNested()
-    @Type(() => AddressDto)
-    address: AddressDto;
 }

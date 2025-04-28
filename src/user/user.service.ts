@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { UpdateLoggedUserDto } from './dto/updateLoggedUser.dto';
 
 
+
 @Injectable()
 export class UserService {
   constructor(
@@ -237,5 +238,4 @@ export class UserService {
 
     return { message: 'User account deleted successfully' };
   }
-
 }
